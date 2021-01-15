@@ -3,7 +3,7 @@ GraphQL Client made 100% In javascript
 
 # Usage:
 // Import package
-import { createClient, astridQuery, astridWatchQuery, astridMutation } from '../astrid-client';
+```import { createClient, astridQuery, astridWatchQuery, astridMutation } from '../astrid-client';
 
 createClient({
     base_url: 'http://localhost:4000'
@@ -43,3 +43,4 @@ astridQuery(query).then(data => {
 astridWatchQuery(query, 100, function(x) {
   //console.log(x)
 }).catch(error => console.error(error))
+```

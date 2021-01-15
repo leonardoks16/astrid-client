@@ -2,21 +2,21 @@
 GraphQL Client made 100% In javascript
 
 ## Usage:
-# header H1
-## header H2
-### header H3
-#### header H4
-##### header H5
-###### header H6
+# Create connection to GraphQL endpoint
+
 ```
 // Import package
 import { createClient, astridQuery, astridWatchQuery, astridMutation } from '../astrid-client';
+
 
 // Create connection to graphql endpoint
 createClient({
     base_url: 'http://localhost:4000'
 })
+```
 
+## Query
+```
 // Define your query
 const query = `{
     userList { _id }

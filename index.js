@@ -62,10 +62,29 @@ export async function astridWatchQuery(query, interval) {
 */
 export async function astridWatchQuery(query, interval, callback) {
   var i = 0;
+  const data = JSON.stringify({
+    query: query,
+    variables: variables
+  });
+  
+  
   return new Promise(function (resolve) {
     var git = setInterval(function () {
-      resolve(i)
-      callback(i);
+      const response = await fetch(
+        process.env.ASTRID_BASE_URL,
+        {
+          method: 'post',
+          body: data,
+          headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': data.length,
+            'User-Agent': 'Node',
+          },
+        }
+      );
+      const json = await response.json();
+      resolve(json)
+      callback(json);
       i++
     }, interval)
   })

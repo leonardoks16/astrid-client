@@ -2,7 +2,7 @@
 GraphQL Client made 100% In javascript
 
 ## Usage:
-# Create connection to GraphQL endpoint
+# Create connection to GraphQL endpoint H1
 
 ```
 // Import package
@@ -15,7 +15,7 @@ createClient({
 })
 ```
 
-## Query
+## Query H2
 ```
 // Define your query
 const query = `{

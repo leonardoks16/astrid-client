@@ -8,7 +8,6 @@ async function createClient({base_url={},options={}}){
 }
 
 
-
 async function nexxusQuery(query) {
   const data = JSON.stringify({
     query: query,
@@ -35,9 +34,13 @@ const query = `{
     userList { _id }
   }`
 
-const mutation = `{
-    login(login: "nexxus@gmail.com", password: "14213712") { id, token }
-}`
+const mutation = `
+mutation login($login: String! $password: String! ){
+  login(login: $login, password: $password ){
+    token, id
+  }
+}
+`
 async function nexxusWatchQuery(query, interval) {
     const data = JSON.stringify({
         query: query,
@@ -64,16 +67,8 @@ async function nexxusWatchQuery(query, interval) {
 }
 
 async function nexxusMutation({ mutation={}, variables={} }) {
-    var login = 'nexxus@gmail.com';
-    var password = '14213712';
-    var query = `
-    mutation login($login: String! $password: String! ){
-      login(login: $login, password: $password ){
-        token, id
-      }
-    }
-    `;
-    
+    var query = mutation;
+
     fetch(process.env.BASE_URL, {
     method: 'POST',
     headers: {
@@ -82,10 +77,7 @@ async function nexxusMutation({ mutation={}, variables={} }) {
     },
     body: JSON.stringify({
         query,
-        variables: {
-          login,
-          password,
-        }
+        variables: variables
     })
     })
     .then(r => r.json())
@@ -101,11 +93,8 @@ createClient({
 
 //nexxusQuery(query);
 
-
-const login = "nexxus@gmail.com"
-const password = "12345678"
 nexxusMutation({
-    mutation: 'swjdewjewj',
+    mutation: mutation,
     variables:  {
         login,
         password,

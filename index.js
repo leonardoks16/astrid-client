@@ -6,10 +6,13 @@ export async function createClient({ base_url={}, options={} }){
     
 }
 
-export async function astridQuery(query) {
+
+export async function astridQuery({query={}, variables={}}) {
   const data = JSON.stringify({
     query: query,
+    variables: variables
   });
+  //console.log(variables)
   //console.log(process.env.ASTRID_BASE_URL)
   const response = await fetch(
     process.env.ASTRID_BASE_URL,
@@ -25,9 +28,12 @@ export async function astridQuery(query) {
   );
 
   const json = await response.json();
+  //console.log('eu',json)
   return json.data
   console.log(json.data);
 }
+
+
 
 /*
 export async function astridWatchQuery(query, interval) {

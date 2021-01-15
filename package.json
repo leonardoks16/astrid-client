@@ -10,10 +10,8 @@
   "author": "Leonardo Kwieczinski Sampaio <leonardosyo@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "chai": "^4.2.0",
     "dotenv": "^8.2.0",
     "esm": "^3.2.25",
-    "mocha": "^8.2.1",
     "node-fetch": "^2.6.1"
   },
   "directories": {

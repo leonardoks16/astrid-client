@@ -15,13 +15,21 @@ createClient({
 })
 ```
 
-#### Query
+### Make simple Query
 ```
 // Define your query
 const query = `{
     userList { _id }
   }`
+  
+// Make a simple query
+astridQuery(query).then(data => {
+  //console.log(data)
+});
+```
 
+### Make simple Mutation
+```
 // Define your mutation
 const mutation = `
 mutation login($login: String! $password: String! ){
@@ -31,12 +39,11 @@ mutation login($login: String! $password: String! ){
 }
 `
 
-// Define variables if will be needed
+// Define your mutation variables if will be needed
 const login = 'nexxus@gmail.com'
 const password = '14213712'
 
-
-// Make a mutation
+// Make mutation
 astridMutation({
   mutation: mutation,
     variables:  {
@@ -47,12 +54,10 @@ astridMutation({
     //console.log(data)
 });
 
-// Make a simple query
-astridQuery(query).then(data => {
-  //console.log(data)
-});
+```
 
-
+### Persisted query
+```
 // Make a persisted query, with a interval in ms
 
 astridWatchQuery(query, 100, function(x) {

@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+//import fetch from 'node-fetch';
 
 export async function createClient({ base_url={}, options={} }){
     //console.log(base_url)
@@ -32,8 +32,7 @@ export async function astridQuery({query={}, variables={}}) {
   return json.data
   console.log(json.data);
 }
-
-
+ 
 
 /*
 export async function astridWatchQuery(query, interval) {

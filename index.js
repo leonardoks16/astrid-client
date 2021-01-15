@@ -1,18 +1,18 @@
 const fetch = require('node-fetch');
 
-async function createClient({base_url={},options={}}){
+export async function createClient({ base_url={}, options={} }){
     //console.log(base_url)
-    process.env.BASE_URL = base_url
+    process.env.ASTRID_BASE_URL = base_url
     
 }
 
-async function astridQuery(query) {
+export async function astridQuery(query) {
   const data = JSON.stringify({
     query: query,
   });
-  console.log(process.env.BASE_URL)
+  console.log(process.env.ASTRID_BASE_URL)
   const response = await fetch(
-    process.env.BASE_URL,
+    process.env.ASTRID_BASE_URL,
     {
       method: 'post',
       body: data,
@@ -29,7 +29,7 @@ async function astridQuery(query) {
   return json.data
 }
 
-async function astridWatchQuery(query, interval) {
+export async function astridWatchQuery(query, interval) {
     const data = JSON.stringify({
         query: query,
     });
@@ -44,7 +44,7 @@ async function astridWatchQuery(query, interval) {
     };
     
     setInterval(function(){
-        fetch(process.env.BASE_URL, options)
+        fetch(process.env.ASTRID_BASE_URL, options)
         .then(r=>r.text())
         .then(d=>{
             console.log(d)
@@ -54,10 +54,10 @@ async function astridWatchQuery(query, interval) {
     
 }
 
-async function astridMutation({ mutation={}, variables={} }) {
+export async function astridMutation({ mutation={}, variables={} }) {
     var query = mutation;
 
-    fetch(process.env.BASE_URL, {
+    fetch(process.env.ASTRID_BASE_URL, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -72,4 +72,4 @@ async function astridMutation({ mutation={}, variables={} }) {
     .then(data => console.log(data));
 }
 
-export default { createClient, astridQuery, astridWatchQuery, astridMutation }
+//TODO configurar para retornar os valores ao invés de console.log(), also handle errors

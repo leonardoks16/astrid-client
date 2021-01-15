@@ -10,7 +10,7 @@ export async function astridQuery(query) {
   const data = JSON.stringify({
     query: query,
   });
-  console.log(process.env.ASTRID_BASE_URL)
+  //console.log(process.env.ASTRID_BASE_URL)
   const response = await fetch(
     process.env.ASTRID_BASE_URL,
     {
@@ -25,10 +25,11 @@ export async function astridQuery(query) {
   );
 
   const json = await response.json();
-  console.log(json.data);
   return json.data
+  console.log(json.data);
 }
 
+/*
 export async function astridWatchQuery(query, interval) {
     const data = JSON.stringify({
         query: query,
@@ -42,22 +43,33 @@ export async function astridWatchQuery(query, interval) {
             'User-Agent': 'Node',
           },
     };
-    
-    setInterval(function(){
-        fetch(process.env.ASTRID_BASE_URL, options)
-        .then(r=>r.text())
-        .then(d=>{
-            console.log(d)
-        });
-        }, interval);
+    setInterval(async function () {
+      const response = await fetch(process.env.ASTRID_BASE_URL, options);
+      const json = await response.json();
+      //console.log(json.data)
+      return json,m
+    }, interval)
+  //TODO RETURN
     
     
 }
 
+*/
+export async function astridWatchQuery(query, interval, callback) {
+  var i = 0;
+  return new Promise(function (resolve) {
+    var git = setInterval(function () {
+      resolve(i)
+      callback(i);
+      i++
+    }, interval)
+  })
+}
+
+
 export async function astridMutation({ mutation={}, variables={} }) {
     var query = mutation;
-
-    fetch(process.env.ASTRID_BASE_URL, {
+    const response = await fetch(process.env.ASTRID_BASE_URL, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -68,8 +80,8 @@ export async function astridMutation({ mutation={}, variables={} }) {
         variables: variables
     })
     })
-    .then(r => r.json())
-    .then(data => console.log(data));
+    const json = await response.json();
+    return json.data
 }
 
 //TODO configurar para retornar os valores ao invés de console.log(), also handle errors

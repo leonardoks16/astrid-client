@@ -4,21 +4,23 @@
   "description": "Client for GraphQL made for Vue.js, but not only vue",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "echo \"who need that shit?\" && exit 0",
     "exec": "node -r esm index.js"
   },
   "author": "Leonardo Kwieczinski Sampaio <leonardosyo@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "chai": "^4.2.0",
     "dotenv": "^8.2.0",
     "esm": "^3.2.25",
+    "mocha": "^8.2.1",
     "node-fetch": "^2.6.1"
   },
   "directories": {
     "example": "examples"
   },
   "devDependencies": {
-    "jest": "^26.6.3"
+    "cypress": "^6.2.1"
   },
   "repository": {
     "type": "git",

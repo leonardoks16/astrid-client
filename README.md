@@ -1,7 +1,7 @@
 # astrid-client
 GraphQL Client made 100% In javascript
 
-# Usage:
+## Usage:
 
 ```
 // Import package

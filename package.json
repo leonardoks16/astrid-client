@@ -1,6 +1,6 @@
 {
   "name": "@leonardoks16/astrid-client",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Client for GraphQL made only with Javascript.",
   "main": "index.js",
   "publishConfig": {

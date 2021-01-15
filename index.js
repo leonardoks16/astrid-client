@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 export async function createClient({ base_url={}, options={} }){
     //console.log(base_url)

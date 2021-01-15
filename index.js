@@ -60,7 +60,7 @@ export async function astridWatchQuery(query, interval) {
 }
 
 */
-export async function astridWatchQuery(query, interval, callback) {
+export async function astridWatchQuery({query={}, variables={}}, interval, callback) {
   var i = 0;
   const data = JSON.stringify({
     query: query,
@@ -69,7 +69,7 @@ export async function astridWatchQuery(query, interval, callback) {
   
   
   return new Promise(function (resolve) {
-    var git = setInterval(function () {
+    var git = setInterval(async function () {
       const response = await fetch(
         process.env.ASTRID_BASE_URL,
         {

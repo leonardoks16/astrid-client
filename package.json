@@ -1,6 +1,6 @@
 {
   "name": "@leonardoks16/astrid-client",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "Client for GraphQL made only with Javascript.",
   "main": "index.js",
   "publishConfig": {
@@ -15,7 +15,8 @@
   "dependencies": {
     "cross-fetch": "^3.0.6",
     "dotenv": "^8.2.0",
-    "esm": "^3.2.25"
+    "esm": "^3.2.25",
+    "node-fetch": "^2.6.1"
   },
   "directories": {
     "example": "examples"

@@ -1,6 +1,6 @@
 {
   "name": "@leonardoks16/astrid-client",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "description": "Client for GraphQL made for Vue.js, but not only vue",
   "main": "index.js",
   "scripts": {

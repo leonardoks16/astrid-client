@@ -1,13 +1,12 @@
 const fetch = require('node-fetch');
-require('dotenv').config();
 
-export default async function createClient({base_url={},options={}}){
+async function createClient({base_url={},options={}}){
     //console.log(base_url)
     process.env.BASE_URL = base_url
     
 }
 
-export default async function astridQuery(query) {
+async function astridQuery(query) {
   const data = JSON.stringify({
     query: query,
   });
@@ -30,7 +29,7 @@ export default async function astridQuery(query) {
   return json.data
 }
 
-export default async function astridWatchQuery(query, interval) {
+async function astridWatchQuery(query, interval) {
     const data = JSON.stringify({
         query: query,
     });
@@ -55,7 +54,7 @@ export default async function astridWatchQuery(query, interval) {
     
 }
 
-export default async function astridMutation({ mutation={}, variables={} }) {
+async function astridMutation({ mutation={}, variables={} }) {
     var query = mutation;
 
     fetch(process.env.BASE_URL, {
@@ -73,3 +72,4 @@ export default async function astridMutation({ mutation={}, variables={} }) {
     .then(data => console.log(data));
 }
 
+export default { createClient, astridQuery, astridWatchQuery, astridMutation }

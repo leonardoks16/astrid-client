@@ -60,7 +60,7 @@ export async function astridWatchQuery(query, interval) {
 }
 
 */
-export async function astridWatchQuery({query={}, variables={}}, interval, callback) {
+export async function astridWatchQuery({query={}, variables={}, interval={}, callback={}}) {
   var i = 0;
   const data = JSON.stringify({
     query: query,

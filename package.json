@@ -1,16 +1,29 @@
 {
-  "name": "nexxus-graphql",
-  "version": "1.0.0",
+  "name": "@leonardoks16/astrid-client",
+  "version": "0.1.0",
   "description": "Client for GraphQL made for Vue.js, but not only vue",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "exec": "node -r esm index.js"
   },
-  "author": "Leonardo Kwieczinski Sampaio",
+  "author": "Leonardo Kwieczinski Sampaio <leonardosyo@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "fastify": "^3.9.2",
+    "esm": "^3.2.25",
     "node-fetch": "^2.6.1"
-  }
+  },
+  "directories": {
+    "example": "examples"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leonardoks16/astrid-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/leonardoks16/astrid-client/issues"
+  },
+  "homepage": "https://github.com/leonardoks16/astrid-client#readme"
 }

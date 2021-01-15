@@ -1,14 +1,13 @@
 const fetch = require('node-fetch');
 require('dotenv').config();
 
-async function createClient({base_url={},options={}}){
+export default async function createClient({base_url={},options={}}){
     //console.log(base_url)
     process.env.BASE_URL = base_url
     
 }
 
-
-async function nexxusQuery(query) {
+export default async function astridQuery(query) {
   const data = JSON.stringify({
     query: query,
   });
@@ -28,20 +27,10 @@ async function nexxusQuery(query) {
 
   const json = await response.json();
   console.log(json.data);
+  return json.data
 }
 
-const query = `{
-    userList { _id }
-  }`
-
-const mutation = `
-mutation login($login: String! $password: String! ){
-  login(login: $login, password: $password ){
-    token, id
-  }
-}
-`
-async function nexxusWatchQuery(query, interval) {
+export default async function astridWatchQuery(query, interval) {
     const data = JSON.stringify({
         query: query,
     });
@@ -66,7 +55,7 @@ async function nexxusWatchQuery(query, interval) {
     
 }
 
-async function nexxusMutation({ mutation={}, variables={} }) {
+export default async function astridMutation({ mutation={}, variables={} }) {
     var query = mutation;
 
     fetch(process.env.BASE_URL, {
@@ -82,22 +71,5 @@ async function nexxusMutation({ mutation={}, variables={} }) {
     })
     .then(r => r.json())
     .then(data => console.log(data));
-    }
-//nexxusQuery(query);
-
-//nexxusWatchQuery(query, 1000)
-
-createClient({
-        base_url: 'http://localhost:4000/'
-    })
-
-//nexxusQuery(query);
-
-nexxusMutation({
-    mutation: mutation,
-    variables:  {
-        login,
-        password,
-      }
-})
+}
 

@@ -4,7 +4,7 @@
   "description": "Client for GraphQL made for Vue.js, but not only vue",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "exec": "node -r esm index.js"
   },
   "author": "Leonardo Kwieczinski Sampaio <leonardosyo@gmail.com>",
@@ -17,7 +17,9 @@
   "directories": {
     "example": "examples"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^26.6.3"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/leonardoks16/astrid-client.git"

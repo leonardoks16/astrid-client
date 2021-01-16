@@ -1,4 +1,7 @@
-//import fetch from 'node-fetch';
+if (typeof window === 'undefined'){
+  // this is node
+  import fetch from 'node-fetch';
+}
 
 export async function createClient({ base_url={}, options={} }){
     //console.log(base_url)
@@ -7,13 +10,11 @@ export async function createClient({ base_url={}, options={} }){
 }
 
 
-export async function astridQuery({query={}, variables={}}) {
+export async function astridQuery({ query={}, variables={}}) {
   const data = JSON.stringify({
     query: query,
     variables: variables
   });
-  //console.log(variables)
-  //console.log(process.env.ASTRID_BASE_URL)
   const response = await fetch(
     process.env.ASTRID_BASE_URL,
     {
@@ -28,46 +29,16 @@ export async function astridQuery({query={}, variables={}}) {
   );
 
   const json = await response.json();
-  //console.log('eu',json)
   return json.data
-  console.log(json.data);
-}
- 
-
-/*
-export async function astridWatchQuery(query, interval) {
-    const data = JSON.stringify({
-        query: query,
-    });
-    const options = {
-        method: 'POST',
-        body: data,
-        headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': data.length,
-            'User-Agent': 'Node',
-          },
-    };
-    setInterval(async function () {
-      const response = await fetch(process.env.ASTRID_BASE_URL, options);
-      const json = await response.json();
-      //console.log(json.data)
-      return json,m
-    }, interval)
-  //TODO RETURN
-    
-    
 }
 
-*/
-export async function astridWatchQuery({query={}, variables={}, interval={}}, callback) {
+
+export async function astridWatchQuery({ query={}, variables={}, interval={}}, callback) {
   var i = 0;
   const data = JSON.stringify({
     query: query,
     variables: variables
   });
-  
-  
   return new Promise(function (resolve) {
     var git = setInterval(async function () {
       const response = await fetch(
@@ -99,13 +70,12 @@ export async function astridMutation({ mutation={}, variables={} }) {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
     },
-    body: JSON.stringify({
-        query,
-        variables: variables
-    })
+    body: JSON.stringify({query, variables})
     })
     const json = await response.json();
     return json.data
 }
 
-//TODO configurar para retornar os valores ao invés de console.log(), also handle errors
+// TODO IMPROVE ERROR HANDLING
+// Simplify GraphQL Client-Side requests.
+//Copyright (C) 2021 Leonardo Kwieczinski Sampaio

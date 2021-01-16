@@ -1,6 +1,6 @@
 {
   "name": "@leonardoks16/astrid-client",
-  "version": "1.2.9",
+  "version": "1.2.11",
   "description": "Astrid-client was made for simplify your life with client side GraphQL.",
   "main": "index.js",
   "publishConfig": {

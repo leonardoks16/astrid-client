@@ -68,9 +68,9 @@ export async function astridMutation({ mutation={}, variables={} }) {
     },
     body: JSON.stringify({query, variables})
     })
-    //const json = await response.json();
+    const json = await response.json();
     
-    return response
+    return json
 }
 
 // TODO IMPROVE ERROR HANDLINGg

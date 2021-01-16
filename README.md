@@ -8,12 +8,12 @@ Deal with GraphQL in a blazing fast way
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#install">Installation</a>
+      <a href="#installation">Installation</a>
     </li>
     <li>
       <a href="#usage">Usage</a>
       <ul>
-        <li><a href="#query">Simple Query</a></li>
+        <li><a href="#make-simple-query">Simple Query</a></li>
         <li><a href="#query-var">Query with variables</a></li>
         <li><a href="#quer-per">Persisted Query</a></li>
         <li><a href="#mutation">Mutations</a></li>

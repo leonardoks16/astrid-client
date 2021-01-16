@@ -14,9 +14,9 @@ Deal with GraphQL in a blazing fast way
       <a href="#usage">Usage</a>
       <ul>
         <li><a href="#make-simple-query">Simple Query</a></li>
-        <li><a href="#Query With Variables ">Query with variables</a></li>
-        <li><a href="#Persisted queries">Persisted Query</a></li>
-        <li><a href="#mutation">Make simple Mutation</a></li>
+        <li><a href="#query-with-variables">Query with variables</a></li>
+        <li><a href="#persisted-queries">Persisted Query</a></li>
+        <li><a href="#make-simple-mutation">Make simple Mutation</a></li>
         <li><a href="#built-with">Subscriptions (Coming Soon)</a></li>
       </ul>
     </li>

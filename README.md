@@ -2,6 +2,38 @@
 A REAL Platform Agnostic GraphQL Client, made with javascript and love.
 Deal with GraphQL in a blazing fast way
 
+
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#usage">Usage</a>
+      <ul>
+        <li><a href="#built-with">Simple Query</a></li>
+          <li><a href="#built-with">Simple Query</a></li>
+          <li><a href="#built-with">Simple Query</a></li>
+          <li><a href="#built-with">Simple Query</a></li>
+          <li><a href="#built-with">Simple Query</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
+  </ol>
+</details>
+
+<!-- usage -->
 ## Usage:
 ### Create connection to GraphQL endpoint
 

@@ -9,6 +9,8 @@ Deal with GraphQL in a blazing fast way
   <ol>
     <li>
       <a href="#install">Installation</a>
+    </li>
+    <li>
       <a href="#usage">Usage</a>
       <ul>
         <li><a href="#query">Simple Query</a></li>

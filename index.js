@@ -25,7 +25,7 @@ export async function astridQuery({ query={}, variables={}}) {
   );
 
   const json = await response.json();
-  return json.data
+  return json
 }
 
 

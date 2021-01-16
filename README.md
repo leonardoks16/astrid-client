@@ -1,5 +1,5 @@
-# astrid-client
-A REAL Platform Agnostic GraphQL Client
+# astrid-client, your new alternative
+A REAL Platform Agnostic GraphQL Client, made with javascript and love.
 
 ## Usage:
 ### Create connection to GraphQL endpoint

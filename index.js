@@ -1,7 +1,3 @@
-if (typeof window === 'undefined'){
-  // this is node
-  import fetch from 'node-fetch';
-}
 
 export async function createClient({ base_url={}, options={} }){
     //console.log(base_url)
@@ -76,6 +72,6 @@ export async function astridMutation({ mutation={}, variables={} }) {
     return json.data
 }
 
-// TODO IMPROVE ERROR HANDLING
+// TODO IMPROVE ERROR HANDLINGg
 // Simplify GraphQL Client-Side requests.
 //Copyright (C) 2021 Leonardo Kwieczinski Sampaio

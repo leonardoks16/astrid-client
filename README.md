@@ -8,37 +8,31 @@ Deal with GraphQL in a blazing fast way
   <summary>Table of Contents</summary>
   <ol>
     <li>
+      <a href="#install">Installation</a>
       <a href="#usage">Usage</a>
       <ul>
-        <li><a href="#built-with">Simple Query</a></li>
-          <li><a href="#built-with">Simple Query</a></li>
-          <li><a href="#built-with">Simple Query</a></li>
-          <li><a href="#built-with">Simple Query</a></li>
-          <li><a href="#built-with">Simple Query</a></li>
+        <li><a href="#query">Simple Query</a></li>
+        <li><a href="#query-var">Query with variables</a></li>
+        <li><a href="#quer-per">Persisted Query</a></li>
+        <li><a href="#mutation">Mutations</a></li>
+        <li><a href="#built-with">Subscriptions (Coming Soon)</a></li>
       </ul>
     </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
+## Installation
+Install npm package
+* npm
+  ```sh
+  npm install @leonardoks16/astrid-client@latest --save
+  ```
 <!-- usage -->
 ## Usage:
 ### Create connection to GraphQL endpoint
 
 ```
-// Import package
+// Import package, you can import only what will be used, of course. Only createClient is required
 import { createClient, astridQuery, astridWatchQuery, astridMutation } from '../astrid-client';
 
 
@@ -58,7 +52,28 @@ const query = `{
 // Make a simple query
 astridQuery(query).then(data => {
   //console.log(data)
-});
+}).catch(error => console.error(error));
+```
+### Query With Variables 
+```
+astridQuery({
+  query: queryWithVar,
+  variables: {id, token}
+}).then(data => {
+  console.log(data)
+}).catch(error => console.error(error));
+```
+
+### Persisted queries
+
+#### inputs: query, interval, callback function
+
+```
+// Make a persisted query, with a interval in ms
+
+astridWatchQuery(query, 100, function(x) {
+  //console.log(x)
+}).catch(error => console.error(error))
 ```
 
 ### Make simple Mutation
@@ -73,10 +88,15 @@ mutation login($login: String! $password: String! ){
 `
 
 // Define your mutation variables if will be needed
-const login = 'nexxus@gmail.com'
-const password = '14213712'
+const login = 'leonardosyo@gmail.com'
+const password = '123456767'
 
-// Make mutation
+// you can do this if you want too
+const {login, password} = payload
+
+// or just pass the variables as json object too
+
+// Make a mutation
 astridMutation({
   mutation: mutation,
     variables:  {
@@ -85,15 +105,7 @@ astridMutation({
     }
   }).then(data => {
     //console.log(data)
-});
-
-```
-
-### Persisted query
-```
-// Make a persisted query, with a interval in ms
-
-astridWatchQuery(query, 100, function(x) {
-  //console.log(x)
 }).catch(error => console.error(error))
 ```
+
+

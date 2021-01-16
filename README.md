@@ -1,6 +1,7 @@
 # astrid-client, a new alternative
 A REAL Platform Agnostic GraphQL Client, made with javascript and love.
-Deal with GraphQL in a blazing fast way
+Deal with GraphQL in a blazing fast way.
+Unpacked Size: 7.02 kB 
 
 
 <!-- TABLE OF CONTENTS -->

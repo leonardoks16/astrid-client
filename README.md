@@ -1,5 +1,5 @@
 # astrid-client
-GraphQL Client made 100% In javascript
+A REAL Platform Agnostic GraphQL Client
 
 ## Usage:
 ### Create connection to GraphQL endpoint

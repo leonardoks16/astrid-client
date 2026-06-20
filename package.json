@@ -1,26 +1,73 @@
 {
   "name": "@leonardoks16/astrid-client",
   "version": "1.2.11",
-  "description": "Astrid-client was made for simplify your life with client side GraphQL.",
-  "main": "index.js",
+  "description": "A lightweight, typed, runtime-agnostic GraphQL client for browsers, Node.js, and edge environments.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "docs",
+    "examples",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "test": "echo \"who need that shit?\" && exit 0",
-    "exec": "node --experimental-modules index.js"
+    "build": "tsup src/index.ts --format esm,cjs --dts --sourcemap --clean",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepublishOnly": "npm run typecheck && npm run test && npm run build"
   },
+  "keywords": [
+    "graphql",
+    "graphql-client",
+    "typescript",
+    "fetch",
+    "browser",
+    "node",
+    "edge",
+    "api-client",
+    "astrid"
+  ],
   "author": "Leonardo Kwieczinski Sampaio <leonardosyo@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "esm": "^3.2.25",
-    "node-fetch": "^2.6.1"
-  },
-  "directories": {
-    "example": "examples"
-  },
   "devDependencies": {
-    "cypress": "^6.2.1"
+    "@eslint/js": "^9.29.0",
+    "eslint": "^9.29.0",
+    "prettier": "^3.5.3",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.34.1",
+    "vite": "^6.4.3",
+    "vitest": "^3.2.4"
+  },
+  "overrides": {
+    "esbuild": "^0.28.1"
   },
   "repository": {
     "type": "git",

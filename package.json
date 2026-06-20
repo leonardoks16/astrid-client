@@ -1,6 +1,6 @@
 {
   "name": "@leonardoks16/astrid-client",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A lightweight, typed, runtime-agnostic GraphQL client for browsers, Node.js, and edge environments.",
   "type": "module",
   "main": "./dist/index.cjs",

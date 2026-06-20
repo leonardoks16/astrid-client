@@ -1,0 +1,90 @@
+name: Release npm package
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version bump: patch, minor, major, prerelease, or exact version like 1.2.3"
+        required: true
+        default: "patch"
+      preid:
+        description: "Prerelease identifier, e.g. beta, alpha, rc. Used only with prerelease bumps."
+        required: false
+        default: "beta"
+      npm_tag:
+        description: "npm dist-tag: latest, beta, next, alpha"
+        required: true
+        default: "latest"
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  release:
+    name: Version, tag and publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: "https://registry.npmjs.org"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint --if-present
+
+      - name: Run tests
+        run: npm test --if-present
+
+      - name: Build package
+        run: npm run build --if-present
+
+      - name: Configure Git author
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump package version and create Git tag
+        id: version
+        shell: bash
+        run: |
+          VERSION_INPUT="${{ github.event.inputs.version }}"
+          PREID="${{ github.event.inputs.preid }}"
+
+          if [[ "$VERSION_INPUT" == "prerelease" || "$VERSION_INPUT" == pre* ]]; then
+            npm version "$VERSION_INPUT" --preid "$PREID" -m "chore(release): v%s"
+          else
+            npm version "$VERSION_INPUT" -m "chore(release): v%s"
+          fi
+
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Push version commit and tag
+        run: |
+          git push origin HEAD:${{ github.ref_name }}
+          git push origin "v${{ steps.version.outputs.version }}"
+
+      - name: Publish to npm
+        run: npm publish --access public --tag ${{ github.event.inputs.npm_tag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: v${{ steps.version.outputs.version }}
+          generate_release_notes: true

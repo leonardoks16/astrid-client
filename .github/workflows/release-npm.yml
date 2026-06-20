@@ -1,29 +1,30 @@
 name: Release npm package
 
 on:
+  push:
+    branches:
+      - main
+      - master
+      - dev
+      - develop
+    paths-ignore:
+      - ".github/**"
   workflow_dispatch:
-    inputs:
-      version:
-        description: "Version bump: patch, minor, major, prerelease, or exact version like 1.2.3"
-        required: true
-        default: "patch"
-      preid:
-        description: "Prerelease identifier, e.g. beta, alpha, rc. Used only with prerelease bumps."
-        required: false
-        default: "beta"
-      npm_tag:
-        description: "npm dist-tag: latest, beta, next, alpha"
-        required: true
-        default: "latest"
 
 permissions:
   contents: write
   id-token: write
 
+concurrency:
+  group: npm-release-${{ github.ref_name }}
+  cancel-in-progress: false
+
 jobs:
   release:
-    name: Version, tag and publish
+    name: Auto version, tag and publish
     runs-on: ubuntu-latest
+
+    if: github.event_name != 'push' || !startsWith(github.event.head_commit.message, 'chore(release):')
 
     steps:
       - name: Checkout repository
@@ -42,49 +43,94 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Resolve release strategy
+        id: release
+        run: node scripts/resolve-release-version.mjs
+
+      - name: Stop when release is not needed
+        if: steps.release.outputs.release_needed != 'true'
+        run: |
+          echo "No releasable changes detected."
+          echo "Changed files: ${{ steps.release.outputs.changed_files }}"
+          exit 0
+
       - name: Run lint
+        if: steps.release.outputs.release_needed == 'true'
         run: npm run lint --if-present
 
+      - name: Run typecheck
+        if: steps.release.outputs.release_needed == 'true'
+        run: npm run typecheck --if-present
+
       - name: Run tests
+        if: steps.release.outputs.release_needed == 'true'
         run: npm test --if-present
 
       - name: Build package
+        if: steps.release.outputs.release_needed == 'true'
         run: npm run build --if-present
 
       - name: Configure Git author
+        if: steps.release.outputs.release_needed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Bump package version and create Git tag
+        if: steps.release.outputs.release_needed == 'true'
         id: version
         shell: bash
         run: |
-          VERSION_INPUT="${{ github.event.inputs.version }}"
-          PREID="${{ github.event.inputs.preid }}"
+          VERSION_ARG="${{ steps.release.outputs.npm_version_arg }}"
+          PREID="${{ steps.release.outputs.preid }}"
 
-          if [[ "$VERSION_INPUT" == "prerelease" || "$VERSION_INPUT" == pre* ]]; then
-            npm version "$VERSION_INPUT" --preid "$PREID" -m "chore(release): v%s"
+          if [[ "$VERSION_ARG" == pre* || "$VERSION_ARG" == "prerelease" ]]; then
+            npm version "$VERSION_ARG" --preid "$PREID" -m "chore(release): v%s [skip ci]"
           else
-            npm version "$VERSION_INPUT" -m "chore(release): v%s"
+            npm version "$VERSION_ARG" -m "chore(release): v%s [skip ci]"
           fi
 
-          NEW_VERSION=$(node -p "require('./package.json').version")
-          echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+          NEW_VERSION="$(node -p "require('./package.json').version")"
+          PACKAGE_NAME="$(node -p "require('./package.json').name")"
 
-      - name: Push version commit and tag
+          echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+          echo "package_name=$PACKAGE_NAME" >> "$GITHUB_OUTPUT"
+
+          echo "Resolved package: $PACKAGE_NAME@$NEW_VERSION"
+
+      - name: Check if npm version already exists
+        if: steps.release.outputs.release_needed == 'true'
+        id: npm_exists
+        shell: bash
+        run: |
+          PACKAGE="${{ steps.version.outputs.package_name }}"
+          VERSION="${{ steps.version.outputs.version }}"
+
+          if npm view "$PACKAGE@$VERSION" version >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "$PACKAGE@$VERSION already exists on npm."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "$PACKAGE@$VERSION does not exist on npm yet."
+          fi
+
+      - name: Push version commit and Git tag
+        if: steps.release.outputs.release_needed == 'true' && steps.npm_exists.outputs.exists != 'true'
         run: |
           git push origin HEAD:${{ github.ref_name }}
           git push origin "v${{ steps.version.outputs.version }}"
 
       - name: Publish to npm
-        run: npm publish --access public --tag ${{ github.event.inputs.npm_tag }}
+        if: steps.release.outputs.release_needed == 'true' && steps.npm_exists.outputs.exists != 'true'
+        run: npm publish --access public --tag "${{ steps.release.outputs.npm_tag }}"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create GitHub Release
+        if: steps.release.outputs.release_needed == 'true' && steps.npm_exists.outputs.exists != 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.version }}
           name: v${{ steps.version.outputs.version }}
           generate_release_notes: true
+          prerelease: ${{ steps.release.outputs.npm_tag != 'latest' }}
